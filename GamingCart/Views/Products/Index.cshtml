@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Product>
+
+@{
+        ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+<div class="row">
+ 
+        <main role="main" class="pb-3" >
+            <div class="er">
+                <div class="col-12">
+                    <vc:categories />
+                    <div class="bg-success mt-3 p-3 text-white">
+                        <vc:small-cart />
+                    </div>
+                </div>
+            </div>
+        </main>
+        @foreach (var item in Model)
+
+        {
+   <div class="col-4">
+        <div class="er">
+                <div class="carte card card-simple" style="margin-bottom: 18px;    background-color: seashell;">
+                <img src="/media/products/@item.Image" alt="print-on-demand"><h2 class="">@item.Name</h2>
+                <div>
+                    <p class="line-link" style="font-size:25px;">@item.Price.ToString("C2")</p>
+                    <a class="btn " style="border-radius: 20px;" >
+                
+                        <span class="spr-option-textedit-link" style="border-radius:20px;">   @Html.Raw(item.Description)</span>
+                    </a>
+                        <a class="btn btn-primary" style="margin-left: 33px;" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">Add to cart</a>
+                     
+                </div>
+            </div>
+   </div>
+   </div>
+        }
+</div>
+
+        @if (ViewBag.TotalPages > 1)
+        {
+                <div class="d-flex w-100 justify-content-center">
+                        <pagination page-count="@ViewBag.TotalPages"
+                            page-target="/products/@ViewBag.CategorySlug"
+                            page-number="@ViewBag.PageNumber"
+                            page-range="@ViewBag.PageRange">
+                        </pagination>
+                </div>
+        }
+
